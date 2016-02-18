@@ -25,7 +25,7 @@
                         <a href="%root_path%index.html">Index</a>
                     </li>
                     <li class="">
-                        <a href="%root_path%workspace/index.html">Workspace</a>
+                        <a href="%root_path%workspace/workspace.html">Workspace</a>
                     </li>
                     <li class="">
                         <a href="%root_path%diary/diary.html">Diary</a>
