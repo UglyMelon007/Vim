@@ -45,8 +45,8 @@ language messages zh_CN.utf-8
 let g:vimwiki_use_mouse = 1
 "存放vimwiki文件路径
 "存放vimwiki转换为html网页时的保存路径
-let g:vimwiki_list = [{'path': 'E:/chao_data/vimwiki/', 
-\ 'path_html': 'E:/chao_data/vimwiki/html/',}]
+let g:vimwiki_list = [{'path': 'E:/ChaoData/vimwiki/', 
+\ 'path_html': 'E:/ChaoData/vimwiki/html/',}]
 "\  'syntax': 'markdown',}]使用markdown解析语法
 
 " 是否开启按语法折叠  会让文件比较慢

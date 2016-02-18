@@ -213,7 +213,7 @@ function! s:get_html_toc(toc_list) "{{{
     let plevel = a:plevel
     while plevel > a:level
       call add(a:toc, '</ul>')
-      let plevel -= 1
+      let plevel -= 2
     endwhile
     return plevel
   endfunction "}}}
