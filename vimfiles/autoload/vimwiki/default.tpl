@@ -70,11 +70,12 @@
         </div>
     </footer>
 
-    <script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/docs.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/highlight.pack.js"></script>
-    <script type="text/javascript" src="%root_path%js/vimwiki.js"></script>
+	<script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
+	<script type="text/javascript" src="%root_path%js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="%root_path%js/docs.min.js"></script>
+	<script type="text/javascript" src="%root_path%js/highlight.pack.js"></script>
+	<script type="text/javascript" src="%root_path%js/vimwiki.js"></script>
+	<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
