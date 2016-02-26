@@ -40,6 +40,7 @@
                     </li>
                 </ul>
             </nav>
+
     </header>
 
     <!--Container-->
@@ -48,11 +49,10 @@
             <div class="col-md-9" role="main">
                 <!--Body content-->
                 %content%
+               <div id="disqus_thread"></div>
             </div>
             <div class="col-md-3" role="complementary">
                 <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" id="navSidebar">
-                    <ul class="nav bs-docs-sidenav">
-                    </ul>
                 </nav>
             </div>
         </div>
@@ -70,12 +70,14 @@
         </div>
     </footer>
 
-	<script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
-	<script type="text/javascript" src="%root_path%js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="%root_path%js/docs.min.js"></script>
-	<script type="text/javascript" src="%root_path%js/highlight.pack.js"></script>
-	<script type="text/javascript" src="%root_path%js/vimwiki.js"></script>
-	<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
+    <script type="text/javascript" src="%root_path%js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="%root_path%js/docs.min.js"></script>
+    <script type="text/javascript" src="%root_path%js/highlight.pack.js"></script>
+    <script type="text/javascript" src="%root_path%js/vimwiki.js"></script>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
 </body>
 
 </html>
