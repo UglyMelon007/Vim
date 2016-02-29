@@ -44,12 +44,11 @@
     </header>
 
     <!--Container-->
-    <div class="container bs-docs-container">
+    <div class="container bs-docs-container" id="main">
         <div class="row">
             <div class="col-md-9" role="main">
                 <!--Body content-->
                 %content%
-               <div id="disqus_thread"></div>
             </div>
             <div class="col-md-3" role="complementary">
                 <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" id="navSidebar">
