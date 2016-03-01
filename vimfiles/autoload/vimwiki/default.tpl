@@ -49,6 +49,17 @@
             <div class="col-md-9" role="main">
                 <!--Body content-->
                 %content%
+                <div id="disqus_thread"></div>
+                <script>
+                    (function() {
+                        var d = document,
+                            s = d.createElement('script');
+                        s.src = 'https://uglymelon007.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <script id="dsq-count-scr" src="https://uglymelon007.disqus.com/count.js" async></script>
             </div>
             <div class="col-md-3" role="complementary">
                 <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" id="navSidebar">
