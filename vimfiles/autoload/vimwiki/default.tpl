@@ -44,22 +44,11 @@
     </header>
 
     <!--Container-->
-    <div class="container bs-docs-container" id="main">
+    <div class="container bs-docs-container">
         <div class="row">
-            <div class="col-md-9" role="main">
+            <div class="col-md-9" role="main" id="main">
                 <!--Body content-->
                 %content%
-                <div id="disqus_thread"></div>
-                <script>
-                    (function() {
-                        var d = document,
-                            s = d.createElement('script');
-                        s.src = 'https://uglymelon007.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-                </script>
-                <script id="dsq-count-scr" src="https://uglymelon007.disqus.com/count.js" async></script>
             </div>
             <div class="col-md-3" role="complementary">
                 <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top" id="navSidebar">
@@ -76,18 +65,17 @@
     <footer class="bs-docs-footer" role="contentinfo">
         <div class="container">
             <p><a href="https://github.com/UglyMelon007/uglymelon007.github.com">Copyright2016 @ UglyMelon007</a>
-                <ul class="bs-docs-footer-links text-muted"></ul>
+                <a id="cnzz_stat_icon_1257740965"></a>
+            </p>
         </div>
     </footer>
 
-    <script type="text/javascript" src="%root_path%js/jquery.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/docs.min.js"></script>
-    <script type="text/javascript" src="%root_path%js/highlight.pack.js"></script>
-    <script type="text/javascript" src="%root_path%js/vimwiki.js"></script>
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-
+    <script src="%root_path%js/jquery.min.js"></script>
+    <script src="%root_path%js/bootstrap.min.js"></script>
+    <script src="%root_path%js/docs.min.js"></script>
+    <script src="%root_path%js/highlight.pack.js"></script>
+    <script src="%root_path%js/vimwiki.js"></script>
+    <script src="%root_path%js/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
