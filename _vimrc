@@ -43,12 +43,11 @@ language messages zh_CN.utf-8
 
 " vimwiki
 let g:vimwiki_use_mouse = 1
-let g:vimwiki_html_header_numbering = 2
 nmap <leader>tt <Plug>VimwikiToggleListItem
 "存放vimwiki文件路径
 "存放vimwiki转换为html网页时的保存路径
-let g:vimwiki_list = [{'path': 'E:/chao_data/vimwiki/', 
-\ 'path_html': 'E:/chao_data/vimwiki/html/',
+let g:vimwiki_list = [{'path': 'E:/ChaoData/vimwiki/', 
+\ 'path_html': 'E:/ChaoData/vimwiki/html/',
 \ 'maxhi': 1}]
 "\  'syntax': 'markdown',}]使用markdown解析语法
 
