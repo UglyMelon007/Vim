@@ -1,5 +1,6 @@
 filetype plugin indent on
 filetype plugin on
+filetype on
 syntax on
 
 "文件打开跳转上次编辑位置
@@ -23,6 +24,13 @@ set shiftwidth=4
  " 设置NerdTree
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
+"Ctags
+map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+"taglist
+map <F4> :TlistToggle<CR>
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 au InsertLeave *.* write
 set nowrap
 set number
