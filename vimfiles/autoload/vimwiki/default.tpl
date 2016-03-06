@@ -3,6 +3,7 @@
 
 <head>
     <title>%title%</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -16,22 +17,34 @@
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <a id="skippy" class="sr-only sr-only-focusable" href="#content">
+		<div class="container"><span class="skiplink-text">Skip to main content</span></div>
+	</a>
     <!--navbor-->
     <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
         <div class="container">
+            <nav id="bs-navbar" class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+                <span class="navbar-brand">导航菜单</span>
+            </nav>
+            <!-- /.navbar-header -->
             <nav id="bs-navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="">
-                        <a href="%root_path%index.html">Index</a>
+                        <a href="%root_path%index.html">主页</a>
                     </li>
                     <li class="">
-                        <a href="%root_path%workspace/workspace.html">Workspace</a>
+                        <a href="%root_path%workspace/workspace.html">工作空间</a>
                     </li>
                     <li class="">
-                        <a href="%root_path%diary/diary.html">Diary</a>
+                        <a href="%root_path%diary/diary.html">日记</a>
                     </li>
                     <li class="">
-                        <a href="%root_path%todo.html">To Do</a>
+                        <a href="%root_path%todo.html">任务列表</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -40,13 +53,13 @@
                     </li>
                 </ul>
             </nav>
-
+        </div>
     </header>
 
     <!--Container-->
     <div class="container bs-docs-container">
         <div class="row">
-            <div class="col-md-9" role="main" id="main">
+            <div class="col-xs-12 col-md-9" role="main" id="main">
                 <!--Body content-->
                 %content%
             </div>
@@ -79,4 +92,3 @@
 </body>
 
 </html>
-
