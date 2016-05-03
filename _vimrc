@@ -38,6 +38,8 @@ set nobackup
 set selection=inclusive
 "设置缩进方式
 set fdm=indent
+"关闭文件打开自动折叠
+set foldlevel=9999
 "设置字符编码方式
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin-1,cp936
@@ -48,7 +50,6 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 "解决consle输出乱码
 language messages zh_CN.utf-8
-
 " vimwiki
 let g:vimwiki_use_mouse = 1
 nmap <leader>tt <Plug>VimwikiToggleListItem
@@ -92,7 +93,6 @@ endfunction
 nmap <f4>ie :call ViewInBrowser("ie")<cr>
 nmap <f4>cr :call ViewInBrowser("cr")<cr>
 
-
 colorscheme lucius
 function MyDiff()
   let opt = '-a --binary '
@@ -120,7 +120,3 @@ endfunction
 call pathogen#infect()
 au FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
 set runtimepath^=vimfiles/bundle/ctrlp.vim
-
-
-
-
