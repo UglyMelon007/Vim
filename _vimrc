@@ -93,6 +93,13 @@ endfunction
 nmap <f4>ie :call ViewInBrowser("ie")<cr>
 nmap <f4>cr :call ViewInBrowser("cr")<cr>
 
+nmap <leader>ff :call RefreshCode()<cr>
+function! RefreshCode()
+	let file = expand("%:p")
+	exec ":silent !js-beautify -r ". file
+	exec ":edit"
+endfunction
+
 colorscheme lucius
 function MyDiff()
   let opt = '-a --binary '
