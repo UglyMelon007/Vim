@@ -125,5 +125,5 @@ function MyDiff()
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
 call pathogen#infect()
-au FileType javascript set dictionary+=$VIM.'\vimfiles\dict\node.dict'
+au FileType javascript set dictionary+=$VIM.'\vimfiles\bundle\vim-node\dict\node.dict'
 set runtimepath^=vimfiles/bundle/ctrlp.vim
