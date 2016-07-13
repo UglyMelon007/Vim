@@ -21,19 +21,9 @@ set guioptions-=m
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
- " 设置NerdTree
-map <F3> :NERDTreeMirror<CR>
-map <F3> :NERDTreeToggle<CR>
-"Ctags
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
-"taglist
-map <F4> :TlistToggle<CR>
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
-au InsertLeave *.* write
 set nowrap
 set number
+set relativenumber
 set nobackup
 set selection=inclusive
 "设置缩进方式
@@ -45,6 +35,17 @@ set encoding=utf-8
 set fileencodings=utf-8,chinese,latin-1,cp936
 set fileencoding=utf-8
 set termencoding=utf-8
+ " 设置NerdTree
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+"Ctags
+map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+"taglist
+map <F4> :TlistToggle<CR>
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+au InsertLeave *.* write
 "解决菜单乱码
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
