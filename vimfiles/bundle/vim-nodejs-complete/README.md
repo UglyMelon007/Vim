@@ -5,6 +5,7 @@ Nodejs `'omnifunc'` function of vim
 
 Support node's builtin module's method&property completion(`ctrl-x ctrl-o`) in `js` file with preview.
 
+Nodejs
 
 ## Install
 Download the [tarball](https://github.com/myhere/vim-nodejs-complete/zipball/master) and extract to your vimfiles(`~/.vim` or `~/vimfiles`) folder.
@@ -77,6 +78,6 @@ process.ex
      ```
 
 
-## Feedback
+## Feedbacfe
 [feedback or advice or feature-request](https://github.com/myhere/vim-nodejs-complete/issues)
 
