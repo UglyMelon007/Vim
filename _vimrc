@@ -26,17 +26,11 @@ set number
 set relativenumber
 set nobackup
 set selection=inclusive
-"自动补全扩号
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
-inoremap < <><ESC>i
-
+colorscheme lucius
 "设置缩进方式
 set fdm=indent
 "关闭文件打开自动折叠
 set foldlevel=9999
-
 "设置字符编码方式
 set encoding=cp936
 set fileencoding=utf-8
@@ -47,6 +41,15 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 "解决consle输出乱码
 language messages zh_CN.utf-8
+"打开文件所在文件夹
+nnoremap <Leader>of :silent !explorer \%cd\% <CR>
+"vim-grepper
+nnoremap <Leader>ft :Grepper<Cr>
+"ctrlp-funky
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+" narrow the list down with a word under cursor
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+
 
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
@@ -122,14 +125,6 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
-"打开文件所在文件夹
-nnoremap <Leader>of :silent !explorer \%cd\% <CR>
-"vim-grepper
-nnoremap <Leader>ft :Grepper<Cr>
-"ctrlp-funky
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
  " 设置NerdTree
 map <F3> :NERDTreeMirror<CR>
@@ -192,7 +187,6 @@ function! RefreshCode()
 	exec ":edit"
 endfunction
 
-colorscheme lucius
 function MyDiff()
   let opt = '-a --binary '
   if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
