@@ -31,15 +31,23 @@ inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap { {}<ESC>i
 inoremap < <><ESC>i
+
 "ÉèÖÃËõ½ø·½Ê½
 set fdm=indent
 "¹Ø±ÕÎÄ¼ş´ò¿ª×Ô¶¯ÕÛµş
 set foldlevel=9999
+
 "ÉèÖÃ×Ö·û±àÂë·½Ê½
-set encoding=utf-8
+set encoding=cp936
 set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,big5,euc-jp,euc-kr,latin1
 set termencoding=utf-8
+"½â¾ö²Ëµ¥ÂÒÂë
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+"½â¾öconsleÊä³öÂÒÂë
+language messages zh_CN.utf-8
+
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -114,7 +122,10 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
-
+"´ò¿ªÎÄ¼şËùÔÚÎÄ¼ş¼Ğ
+nnoremap <Leader>of :silent !explorer \%cd\% <CR>
+"vim-grepper
+nnoremap <Leader>ft :Grepper<Cr>
 "ctrlp-funky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
@@ -131,11 +142,6 @@ let Tlist_Show_One_File = 1            "²»Í¬Ê±ÏÔÊ¾¶à¸öÎÄ¼şµÄtag£¬Ö»ÏÔÊ¾µ±Ç°ÎÄ¼şµ
 let Tlist_Exit_OnlyWindow = 1          "Èç¹ûtaglist´°¿ÚÊÇ×îºóÒ»¸ö´°¿Ú£¬ÔòÍË³övim
 let Tlist_Use_Right_Window = 1         "ÔÚÓÒ²à´°¿ÚÖĞÏÔÊ¾taglist´°¿Ú
 au InsertLeave *.* write
-"½â¾ö²Ëµ¥ÂÒÂë
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
-"½â¾öconsleÊä³öÂÒÂë
-language messages zh_CN.utf-8
 " vimwiki
 let g:vimwiki_use_mouse = 1
 nmap <leader>tt <Plug>VimwikiToggleListItem
