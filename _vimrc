@@ -39,7 +39,7 @@ set fdm=indent
 "关闭文件打开自动折叠
 set foldlevel=9999
 "设置字符编码方式
-set encoding=cp936
+set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,big5,euc-jp,euc-kr,latin1
 set termencoding=utf-8
