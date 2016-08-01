@@ -7,10 +7,11 @@ syntax on
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+"如果打开R文件，则设置窗口大小及位置
 autocmd BufNewFile,BufRead *.r call SetWindowLocation()
 function! SetWindowLocation()
 	winpos 0 0
-	set lines=15 columns=152
+	set lines=16 columns=153
 endfunction
 "自动进入文件所在目录
 set autochdir
