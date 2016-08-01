@@ -7,6 +7,11 @@ syntax on
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+autocmd BufNewFile,BufRead *.r call SetWindowLocation()
+function! SetWindowLocation()
+	winpos 0 0
+	set lines=15 columns=152
+endfunction
 "自动进入文件所在目录
 set autochdir
 set nocompatible
