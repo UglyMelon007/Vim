@@ -11,7 +11,7 @@ endif
 autocmd BufNewFile,BufRead *.r call SetWindowLocation()
 function! SetWindowLocation()
 	winpos 0 0
-	set lines=16 columns=153
+	set lines=17 columns=156
 endfunction
 "自动进入文件所在目录
 set autochdir
