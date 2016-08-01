@@ -44,6 +44,8 @@ source $VIMRUNTIME/menu.vim
 language messages zh_CN.utf-8
 "打开文件所在文件夹
 nnoremap <Leader>of :silent !explorer \%cd\% <CR>
+"在文件所在目录打开控制台
+nnoremap <Leader>oc :silent !start<CR>
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
 "ctrlp-funky
