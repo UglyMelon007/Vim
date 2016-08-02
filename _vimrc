@@ -41,7 +41,7 @@ set foldlevel=9999
 "设置字符编码方式
 set encoding=utf-8
 set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,gbk2312,gbk,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 set termencoding=utf-8
 "解决菜单乱码
 source $VIMRUNTIME/delmenu.vim
