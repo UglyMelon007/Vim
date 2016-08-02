@@ -135,6 +135,7 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "vim-airline
+set laststatus=2
 "这个是安装字体后 必须设置此项" 
 let g:airline_powerline_fonts = 1   
 "打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
