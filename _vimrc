@@ -3,17 +3,17 @@ filetype plugin on
 filetype on
 syntax on
 
-"ÎÄ¼ş´ò¿ªÌø×ªÉÏ´Î±à¼­Î»ÖÃ
+"æ–‡ä»¶æ‰“å¼€è·³è½¬ä¸Šæ¬¡ç¼–è¾‘ä½ç½®
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-"Èç¹û´ò¿ªRÎÄ¼ş£¬ÔòÉèÖÃ´°¿Ú´óĞ¡¼°Î»ÖÃ
+"å¦‚æœæ‰“å¼€Ræ–‡ä»¶ï¼Œåˆ™è®¾ç½®çª—å£å¤§å°åŠä½ç½®
 autocmd BufNewFile,BufRead *.r call SetWindowLocation()
 function! SetWindowLocation()
 	winpos 0 0
 	set lines=17 columns=156
 endfunction
-"×Ô¶¯½øÈëÎÄ¼şËùÔÚÄ¿Â¼
+"è‡ªåŠ¨è¿›å…¥æ–‡ä»¶æ‰€åœ¨ç›®å½•
 set autochdir
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
@@ -21,7 +21,8 @@ source $VIMRUNTIME/mswin.vim
 behave mswin
 set diffexpr=MyDiff()
 set autoindent
-set guifont=Monaco:h10
+"set guifont=Monaco:h10
+set guifont=Consolas_for_Powerline_FixedD:h12:cANSI:qDRAFT
 set cursorline
 set guioptions-=T 
 set guioptions-=m
@@ -34,23 +35,23 @@ set relativenumber
 set nobackup
 set selection=inclusive
 colorscheme lucius
-"ÉèÖÃËõ½ø·½Ê½
+"è®¾ç½®ç¼©è¿›æ–¹å¼
 set fdm=indent
-"¹Ø±ÕÎÄ¼ş´ò¿ª×Ô¶¯ÕÛµş
+"å…³é—­æ–‡ä»¶æ‰“å¼€è‡ªåŠ¨æŠ˜å 
 set foldlevel=9999
-"ÉèÖÃ×Ö·û±àÂë·½Ê½
+"è®¾ç½®å­—ç¬¦ç¼–ç æ–¹å¼
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,gbk2312,gbk,gb18030,cp936,big5,euc-jp,euc-kr,latin1
 set termencoding=utf-8
-"½â¾ö²Ëµ¥ÂÒÂë
+"è§£å†³èœå•ä¹±ç 
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
-"½â¾öconsleÊä³öÂÒÂë
+"è§£å†³consleè¾“å‡ºä¹±ç 
 language messages zh_CN.utf-8
-"´ò¿ªÎÄ¼şËùÔÚÎÄ¼ş¼Ğ
+"æ‰“å¼€æ–‡ä»¶æ‰€åœ¨æ–‡ä»¶å¤¹
 nnoremap <Leader>of :silent !explorer \%cd\% <CR>
-"ÔÚÎÄ¼şËùÔÚÄ¿Â¼´ò¿ª¿ØÖÆÌ¨
+"åœ¨æ–‡ä»¶æ‰€åœ¨ç›®å½•æ‰“å¼€æ§åˆ¶å°
 nnoremap <Leader>oc :silent !start<CR>
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
@@ -133,42 +134,65 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+"vim-airline
+"è¿™ä¸ªæ˜¯å®‰è£…å­—ä½“å å¿…é¡»è®¾ç½®æ­¤é¡¹" 
+let g:airline_powerline_fonts = 1   
+"æ‰“å¼€tablineåŠŸèƒ½,æ–¹ä¾¿æŸ¥çœ‹Bufferå’Œåˆ‡æ¢,çœå»äº†minibufexplæ’ä»¶
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+"è®¾ç½®åˆ‡æ¢Bufferå¿«æ·é”®"
+nnoremap <C-tab> :bn<CR>
+nnoremap <C-s-tab> :bp<CR>
+" å…³é—­çŠ¶æ€æ˜¾ç¤ºç©ºç™½ç¬¦å·è®¡æ•°
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+" è®¾ç½®consolaså­—ä½“"å‰é¢å·²ç»è®¾ç½®è¿‡
+"set guifont=Consolas\ for\ Powerline\ FixedD:h11
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+" old vim-powerline symbols
+let g:airline_left_sep = 'â®€'
+let g:airline_left_alt_sep = 'â®'
+let g:airline_right_sep = 'â®‚'
+let g:airline_right_alt_sep = 'â®ƒ'
+let g:airline_symbols.branch = 'â­ '
+let g:airline_symbols.readonly = 'â­¤'
 
-
- " ÉèÖÃNerdTree
+" è®¾ç½®NerdTree
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
 "Ctags
 map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
 "taglist
 map <F4> :TlistToggle<CR>
-let Tlist_Show_One_File = 1            "²»Í¬Ê±ÏÔÊ¾¶à¸öÎÄ¼şµÄtag£¬Ö»ÏÔÊ¾µ±Ç°ÎÄ¼şµÄ
-let Tlist_Exit_OnlyWindow = 1          "Èç¹ûtaglist´°¿ÚÊÇ×îºóÒ»¸ö´°¿Ú£¬ÔòÍË³övim
-let Tlist_Use_Right_Window = 1         "ÔÚÓÒ²à´°¿ÚÖĞÏÔÊ¾taglist´°¿Ú
+let Tlist_Show_One_File = 1            "ä¸åŒæ—¶æ˜¾ç¤ºå¤šä¸ªæ–‡ä»¶çš„tagï¼Œåªæ˜¾ç¤ºå½“å‰æ–‡ä»¶çš„
+let Tlist_Exit_OnlyWindow = 1          "å¦‚æœtaglistçª—å£æ˜¯æœ€åä¸€ä¸ªçª—å£ï¼Œåˆ™é€€å‡ºvim
+let Tlist_Use_Right_Window = 1         "åœ¨å³ä¾§çª—å£ä¸­æ˜¾ç¤ºtaglistçª—å£
 au InsertLeave *.* write
 " vimwiki
 let g:vimwiki_use_mouse = 1
 nmap <leader>tt <Plug>VimwikiToggleListItem
-"´æ·ÅvimwikiÎÄ¼şÂ·¾¶
-"´æ·Åvimwiki×ª»»ÎªhtmlÍøÒ³Ê±µÄ±£´æÂ·¾¶
+"å­˜æ”¾vimwikiæ–‡ä»¶è·¯å¾„
+"å­˜æ”¾vimwikiè½¬æ¢ä¸ºhtmlç½‘é¡µæ—¶çš„ä¿å­˜è·¯å¾„
 let g:vimwiki_list = [{'path': 'E:/ChaoData/vimwiki/', 
 \ 'path_html': 'E:/ChaoData/vimwiki/html/',
 \ 'maxhi': 1}]
-"\  'syntax': 'markdown',}]Ê¹ÓÃmarkdown½âÎöÓï·¨
+"\  'syntax': 'markdown',}]ä½¿ç”¨markdownè§£æè¯­æ³•
 
-" ÊÇ·ñ¿ªÆô°´Óï·¨ÕÛµş  »áÈÃÎÄ¼ş±È½ÏÂı
+" æ˜¯å¦å¼€å¯æŒ‰è¯­æ³•æŠ˜å   ä¼šè®©æ–‡ä»¶æ¯”è¾ƒæ…¢
 let g:vimwiki_folding = ' '
-" ¶ÔÖĞÎÄÓÃ»§À´Ëµ£¬ÎÒÃÇ²¢²»ÔõÃ´ĞèÒªÍÕ·åÓ¢ÎÄ³ÉÎªÎ¬»ù´ÊÌõ
+" å¯¹ä¸­æ–‡ç”¨æˆ·æ¥è¯´ï¼Œæˆ‘ä»¬å¹¶ä¸æ€ä¹ˆéœ€è¦é©¼å³°è‹±æ–‡æˆä¸ºç»´åŸºè¯æ¡
 let g:vimwiki_camel_case = 0
  
-" ±ê¼ÇÎªÍê³ÉµÄ checklist ÏîÄ¿»áÓĞÌØ±ğµÄÑÕÉ«
+" æ ‡è®°ä¸ºå®Œæˆçš„ checklist é¡¹ç›®ä¼šæœ‰ç‰¹åˆ«çš„é¢œè‰²
 let g:vimwiki_hl_cb_checked = 1
  
-" ÎÒµÄ vim ÊÇÃ»ÓĞ²Ëµ¥µÄ£¬¼ÓÒ»¸ö vimwiki ²Ëµ¥ÏîÒ²Ã»ÓĞÒâÒå
+" æˆ‘çš„ vim æ˜¯æ²¡æœ‰èœå•çš„ï¼ŒåŠ ä¸€ä¸ª vimwiki èœå•é¡¹ä¹Ÿæ²¡æœ‰æ„ä¹‰
 let g:vimwiki_menu = ''
 
 
-" ÔÚä¯ÀÀÆ÷Ô¤ÀÀ for win32
+" åœ¨æµè§ˆå™¨é¢„è§ˆ for win32
 function! ViewInBrowser(name)
     let file = expand("%:p")
     exec ":update " . file
