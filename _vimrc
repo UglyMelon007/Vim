@@ -31,6 +31,7 @@ set softtabstop=4
 set shiftwidth=4
 set nowrap
 set number
+"设置相对行号
 set relativenumber
 set nobackup
 set selection=inclusive
