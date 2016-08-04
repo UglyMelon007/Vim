@@ -7,12 +7,7 @@ syntax on
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-"如果打开R文件，则设置窗口大小及位置
-autocmd BufNewFile,BufRead *.r call SetWindowLocation()
-function! SetWindowLocation()
-	winpos 0 0
-	set lines=17 columns=156
-endfunction
+
 "自动进入文件所在目录
 set autochdir
 set nocompatible
@@ -54,13 +49,22 @@ language messages zh_CN.utf-8
 nnoremap <Leader>of :silent !explorer \%cd\% <CR>
 "在文件所在目录打开控制台
 nnoremap <Leader>oc :silent !start<CR>
+
+
+"如果打开R文件，则设置窗口大小及位置
+autocmd BufNewFile,BufRead *.r call SetWindowLocation()
+function! SetWindowLocation()
+	winpos 0 0
+	set lines=17 columns=156
+endfunction
+
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
+
 "ctrlp-funky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-
 
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
@@ -73,24 +77,20 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
-
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
-
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -104,33 +104,16 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown,md setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript,js setlocal omnifunc=nodejscomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
@@ -164,14 +147,17 @@ let g:airline_symbols.readonly = '⭤'
 " 设置NerdTree
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
+
 "Ctags
 map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+
 "taglist
 map <F4> :TlistToggle<CR>
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 au InsertLeave *.* write
+
 " vimwiki
 let g:vimwiki_use_mouse = 1
 nmap <leader>tt <Plug>VimwikiToggleListItem
@@ -180,19 +166,15 @@ nmap <leader>tt <Plug>VimwikiToggleListItem
 let g:vimwiki_list = [{'path': 'E:/ChaoData/vimwiki/', 
 \ 'path_html': 'E:/ChaoData/vimwiki/html/',
 \ 'maxhi': 1}]
-"\  'syntax': 'markdown',}]使用markdown解析语法
 
 " 是否开启按语法折叠  会让文件比较慢
 let g:vimwiki_folding = ' '
 " 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
 let g:vimwiki_camel_case = 0
- 
 " 标记为完成的 checklist 项目会有特别的颜色
 let g:vimwiki_hl_cb_checked = 1
- 
 " 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
 let g:vimwiki_menu = ''
-
 
 " 在浏览器预览 for win32
 function! ViewInBrowser(name)
@@ -215,6 +197,7 @@ endfunction
 nmap <f4>ie :call ViewInBrowser("ie")<cr>
 nmap <f4>cr :call ViewInBrowser("cr")<cr>
 
+"美化各类文档（利用js-beautify)
 nmap <leader>ff :call RefreshCode()<cr>
 function! RefreshCode()
 	let file = expand("%:p")
@@ -247,4 +230,6 @@ function MyDiff()
 endfunction
 call pathogen#infect()
 au FileType javascript set dictionary+=$VIM.'\vimfiles\bundle\vim-node\dict\node.dict'
+
+"CtrlP
 set runtimepath^=vimfiles/bundle/ctrlp.vim
