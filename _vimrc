@@ -35,6 +35,8 @@ colorscheme lucius
 set fdm=indent
 "关闭文件打开自动折叠
 set foldlevel=9999
+"自动保存文件
+au InsertLeave *.* write
 "设置字符编码方式
 set encoding=utf-8
 set fileencoding=utf-8
@@ -166,7 +168,6 @@ map <F4> :TlistToggle<CR>
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
-au InsertLeave *.* write
 
 " vimwiki
 let g:vimwiki_use_mouse = 1
