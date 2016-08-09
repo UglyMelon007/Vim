@@ -73,10 +73,12 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-"打开文件自动检测
-"let g:syntastic_check_on_open = 1
+"是否自动打开关闭错误列表 0 不自动打开或关闭 1自动打开关闭 2自动关闭不自动打开
+"3自动打开不自动关闭
+let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_wq = 0
+nnoremap <Leader>p :lprevious <CR>
+nnoremap <Leader>n :lnext <CR>
 
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
