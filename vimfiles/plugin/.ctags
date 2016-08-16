@@ -6,3 +6,9 @@
 --regex-markdown=/^#{4}[ \t]*([^#]+.*)/.       \1/h,heading4/
 --regex-markdown=/^#{5}[ \t]*([^#]+.*)/.         \1/h,heading5/
 --regex-markdown=/^#{6}[ \t]*([^#]+.*)/.           \1/h,heading6/
+--langdef=R
+--langmap=r:.R.r
+--regex-R=/^[ \t]*"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t]function/\1/f,Functions/
+--regex-R=/^"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t][^f][^u][^n][^c][^t][^i][^o][^n]/\1/g,GlobalVars/
+--regex-R=/[ \t]"?([.A-Za-z][.A-Za-z0-9_]*)"?[ \t]*<-[ \t][^f][^u][^n][^c][^t][^i][^o][^n]/\1/v,FunctionVariables/
+

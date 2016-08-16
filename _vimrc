@@ -191,6 +191,15 @@ let g:tagbar_type_css = {
         \ 'i:identities'
     \ ]
 \ }
+"支持R
+let g:tagbar_type_r = {
+    \ 'ctagstype' : 'r',
+    \ 'kinds'     : [
+        \ 'f:Functions',
+        \ 'g:GlobalVariables',
+        \ 'v:FunctionVariables',
+    \ ]
+\ }
 
 " vimwiki
 let g:vimwiki_use_mouse = 1
