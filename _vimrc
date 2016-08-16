@@ -159,17 +159,21 @@ let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 
 " 设置NerdTree
-map <F3> :NERDTreeMirror<CR>
-map <F3> :NERDTreeToggle<CR>
+map <silent> <F3> :NERDTreeMirror<CR>
+map <silent> <F3> :NERDTreeToggle<CR>
 
 "Ctags
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+map <silent> <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
 
-"taglist
-map <F4> :TlistToggle<CR>
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+"taglist废弃不用 使用tagbar
+"map <F4> :TlistToggle<CR>
+"let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+"let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+"let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+
+"tagbar
+map <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus=1
 
 " vimwiki
 let g:vimwiki_use_mouse = 1

@@ -16,7 +16,7 @@ Contents                                            *tagbar* *tagbar-contents*
          3. Installation .................... |tagbar-installation|
          4. Usage ........................... |tagbar-usage|
               Commands ...................... |tagbar-commands|
-              Key mappings .................. |tagbar-keys|
+              Key mappings .................. |:-keys|
          5. Configuration ................... |tagbar-configuration|
               Highlight colours ............. |tagbar-highlight|
               Automatically opening Tagbar .. |tagbar-autoopen|
