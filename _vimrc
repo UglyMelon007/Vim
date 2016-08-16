@@ -33,8 +33,10 @@ set selection=inclusive
 colorscheme lucius
 "设置缩进方式
 set fdm=indent
-"关闭文件打开自动折叠
+"关闭 文件打开自动折叠
 set foldlevel=9999
+"禁用markdown文件折叠
+let g:vim_markdown_folding_disabled = 1
 "自动保存文件
 au InsertLeave *.* write
 "设置字符编码方式
