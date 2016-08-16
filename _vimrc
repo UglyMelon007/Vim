@@ -174,6 +174,23 @@ map <silent> <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 "tagbar
 map <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus=1
+"支持markdown
+let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+                \ 'h:headings',
+        \ ],
+    \ 'sort' : 0
+\ }
+"支持css
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
 
 " vimwiki
 let g:vimwiki_use_mouse = 1
