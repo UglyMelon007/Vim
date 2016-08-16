@@ -41,7 +41,7 @@ Create source		|neocomplete-create-source|
 Create filter		|neocomplete-create-filter|
   Filter attributes       |neocomplete-filter-attributes|
 FILTERS			|neocomplete-filters|
-External sources	|neocomplete-external-sources|
+External sources	|〛 !J!0-external-sources|
 FAQ			|neocomplete-faq|
 
 ==============================================================================

@@ -65,6 +65,19 @@ endfunction
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
 
+"ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"使用了ag去替换默认的搜索功能grep
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 "ctrlp-funky
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
@@ -159,6 +172,7 @@ let g:airline_right_sep = '⮂'
 let g:airline_right_alt_sep = '⮃'
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
+set statusline+=%{fugitive#statusline()} "  Git Hotness
 
 " 设置NerdTree
 map <silent> <F3> :NERDTreeMirror<CR>
