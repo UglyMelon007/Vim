@@ -21,9 +21,9 @@ set guifont=Consolas_for_Powerline_FixedD:h12:cANSI:qDRAFT
 set cursorline
 set guioptions-=T 
 set guioptions-=m
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set nowrap
 set number
 "设置相对行号
@@ -66,8 +66,8 @@ endfunction
 nnoremap <Leader>ft :Grepper<Cr>
 
 "ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+set wildignore+=*.o,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif,*~,*.pyc,*_build/*,*/converage/*,*.mo,*.po,*.so
+let g:ctrlp_custom_ignore = 'node_modules\|bower_components\|.pyc|DS_Store|(\.(swp|ico|git|svn))'
 "使用了ag去替换默认的搜索功能grep
 if executable('ag')
   " Use Ag over Grep
