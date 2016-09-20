@@ -28,7 +28,11 @@ set nowrap
 set number
 "设置相对行号
 set relativenumber
+"不生成备份文件
+set noundofile
 set nobackup
+set noswapfile
+
 set selection=inclusive
 colorscheme lucius
 "设置缩进方式
