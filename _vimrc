@@ -31,7 +31,6 @@ set relativenumber
 "不生成备份文件
 set noundofile
 set nobackup
-set noswapfile
 
 set selection=inclusive
 colorscheme lucius
