@@ -33,7 +33,10 @@ set noundofile
 set nobackup
 
 set selection=inclusive
-colorscheme lucius
+"为gvim与vim设置不同的配色方案
+if has('gui_running')
+	colorscheme lucius
+endif
 "设置缩进方式
 set fdm=indent
 "关闭 文件打开自动折叠
@@ -148,6 +151,9 @@ autocmd FileType javascript,js setlocal omnifunc=nodejscomplete#CompleteJS
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
+
+"vim-css-color
+let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 "vim-airline
 set laststatus=2
