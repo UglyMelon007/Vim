@@ -21,7 +21,7 @@ function! s:particle()
   let [x, y] = [getwinposx(), getwinposy()]
   let x += s:rand() % 10 - 5
   let y += s:rand() % 10 - 5
-  exe 'winpos' x y
+  "exe 'winpos' x y
   let c = synIDattr(synIDtrans(synID(line("."), col(".")-1, 1)), "fg")
   if c =~ '^#'
     let c = c[1:]
