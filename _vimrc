@@ -71,9 +71,9 @@ endfunction
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
 
-"ctrlp
-set wildignore+=*.o,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif,*~,*.pyc,*_build/*,*/converage/*,*.mo,*.po,*.so
-let g:ctrlp_custom_ignore = 'node_modules\|bower_components\|.pyc|DS_Store|(\.(swp|ico|git|svn))'
+"ctrlp(不使用过滤功能，有些文件得需要编辑，不能过滤)
+"set wildignore+=*.o,*.swp,*.zip,*.png,*.jpg,*.jpeg,*.gif,*~,*.pyc,*_build/*,*/converage/*,*.mo,*.po,*.so
+"let g:ctrlp_custom_ignore = 'node_modules\|bower_components\|.pyc|DS_Store|(\.(swp|ico|git|svn))'
 "使用了ag去替换默认的搜索功能grep
 if executable('ag')
   " Use Ag over Grep
