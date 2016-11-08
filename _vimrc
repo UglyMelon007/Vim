@@ -31,6 +31,7 @@ set relativenumber
 "不生成备份文件
 set noundofile
 set nobackup
+let g:syntastic_vim_checkers = ['vint']
 
 set selection=inclusive
 "为gvim与vim设置不同的配色方案
@@ -100,6 +101,11 @@ let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_wq = 0
 nnoremap <Leader>p :lprevious <CR>
 nnoremap <Leader>n :lnext <CR>
+
+"ale(代码异步检测)
+"自定义跳转错误行快捷键：
+nmap <silent> <C-k> <Plug>
+nmap <silent> <C-j> <Plug>
 
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
