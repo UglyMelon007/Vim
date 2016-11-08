@@ -49,6 +49,7 @@
            as.integer(getOption("nvimcom.labelerr")),
            path.package("nvimcom"),
            as.character(utils::packageVersion("nvimcom")),
+           paste(search(), collapse = " "),
            PACKAGE="nvimcom")
     }
 }
@@ -127,4 +128,10 @@ nvim_viewdf <- function(oname)
            PACKAGE="nvimcom")
     }
     return(invisible(NULL))
+}
+
+source.and.clean <- function(f, ...)
+{
+    on.exit(unlink(f))
+    source(f, ...)
 }

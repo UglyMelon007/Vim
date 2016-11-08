@@ -1,16 +1,16 @@
 " This file contains code used only on OS X
 
 if isdirectory("/Applications/R64.app")
-    let g:rplugin_r64app = 1
+    let s:R64app = 1
 else
-    let g:rplugin_r64app = 0
+    let s:R64app = 0
 endif
 
 function StartR_OSX()
     if IsSendCmdToRFake()
         return
     endif
-    if g:rplugin_r64app
+    if s:R64app
         let rcmd = "/Applications/R64.app"
     else
         let rcmd = "/Applications/R.app"
@@ -27,13 +27,7 @@ function StartR_OSX()
         call RWarningMsg(rlog)
     endif
     let g:SendCmdToR = function('SendCmdToR_OSX')
-    if WaitNvimcomStart()
-        call foreground()
-        sleep 200m
-        if g:R_after_start != ''
-            call system(g:R_after_start)
-        endif
-    endif
+    call WaitNvimcomStart()
 endfunction
 
 function SendCmdToR_OSX(...)
@@ -43,14 +37,13 @@ function SendCmdToR_OSX(...)
         let cmd = a:1
     endif
 
-    if g:rplugin_r64app
+    if s:R64app
         let rcmd = "R64"
     else
         let rcmd = "R"
     endif
 
     " for some reason it doesn't like "\025"
-    let cmd = a:cmd
     let cmd = substitute(cmd, "\\", '\\\', 'g')
     let cmd = substitute(cmd, '"', '\\"', "g")
     let cmd = substitute(cmd, "'", "'\\\\''", "g")

@@ -1,13 +1,25 @@
 " This file contains code used only on Windows
 
-let g:rplugin_sumatra_in_path = 0
+let s:sumatra_in_path = 0
 
 call RSetDefaultValue("g:R_set_home_env", 1)
 call RSetDefaultValue("g:R_i386", 0)
 
 if !exists("g:rplugin_R_path")
     call writefile(['reg.exe QUERY "HKLM\SOFTWARE\R-core\R" /s'], g:rplugin_tmpdir . "/run_cmd.bat")
-    let rip = filter(split(system(g:rplugin_tmpdir . "/run_cmd.bat"), "\n"), 'v:val =~ ".*InstallPath.*REG_SZ"')
+    let ripl = system(g:rplugin_tmpdir . "/run_cmd.bat")
+    let rip = filter(split(ripl, "\n"), 'v:val =~ ".*InstallPath.*REG_SZ"')
+    if len(rip) == 0
+        " Normally, 32 bit applications access only 32 bit registry and...
+        " We have to try again if the user has installed R only in the other architecture.
+        if has("win64")
+            call writefile(['reg.exe QUERY "HKLM\SOFTWARE\R-core\R" /s /reg:32'], g:rplugin_tmpdir . "/run_cmd.bat")
+        else
+            call writefile(['reg.exe QUERY "HKLM\SOFTWARE\R-core\R" /s /reg:64'], g:rplugin_tmpdir . "/run_cmd.bat")
+        endif
+        let ripl = system(g:rplugin_tmpdir . "/run_cmd.bat")
+        let rip = filter(split(ripl, "\n"), 'v:val =~ ".*InstallPath.*REG_SZ"')
+    endif
     if len(rip) > 0
         let s:rinstallpath = substitute(rip[0], '.*InstallPath.*REG_SZ\s*', '', '')
         let s:rinstallpath = substitute(s:rinstallpath, '\n', '', 'g')
@@ -18,15 +30,18 @@ if !exists("g:rplugin_R_path")
         let g:rplugin_failed = 1
         finish
     endif
-    if isdirectory(s:rinstallpath . '\bin\i386')
-        if !isdirectory(s:rinstallpath . '\bin\x64')
-            let g:R_i386 = 1
-        endif
-        if g:R_i386
-            let $PATH = s:rinstallpath . '\bin\i386;' . $PATH
-        else
-            let $PATH = s:rinstallpath . '\bin\x64;' . $PATH
-        endif
+    let hasR32 = isdirectory(s:rinstallpath . '\bin\i386')
+    let hasR64 = isdirectory(s:rinstallpath . '\bin\x64')
+    if hasR32 && !hasR64
+        let g:R_i386 = 1
+    endif
+    if hasR64 && !hasR32
+        let g:R_i386 = 0
+    endif
+    if hasR32 && g:R_i386
+        let $PATH = s:rinstallpath . '\bin\i386;' . $PATH
+    elseif hasR64 && g:R_i386 == 0
+        let $PATH = s:rinstallpath . '\bin\x64;' . $PATH
     else
         let $PATH = s:rinstallpath . '\bin;' . $PATH
     endif
@@ -43,24 +58,56 @@ endif
 
 let g:R_R_window_title = "R Console"
 
+" Fix Rtools position in $PATH
+let s:wgcc = split(system("where gcc"), "\n")
+if len(s:wgcc) > 0 && s:wgcc[0] !~ "Rtools"
+    let s:path = split($PATH, ";")
+    for s:p in s:path
+        if s:p =~ "Rtools"
+            let $PATH = s:p . ";" . $PATH
+        endif
+    endfor
+    unlet s:path
+    unlet s:p
+endif
+unlet s:wgcc
+
+function CheckRtools()
+    if $PATH !~ "Rtools"
+        call RWarningMsgInp("Rtools is not in the system PATH")
+        return
+    endif
+
+    let Rtpath = substitute($PATH, '.*;\(.*Rtools\)\\.*', '\1', '')
+    if Rtpath =~ "Rtools"
+        let Rtpath = substitute(Rtpath, "\\", "/", "g") . "/VERSION.txt"
+        if filereadable(Rtpath)
+            let Rtvrsn = readfile(Rtpath)
+            if Rtvrsn[0] =~ "version 3.4"
+                call RWarningMsg("Nvim-R is incompatible with Rtools 3.4 (August 2016). Please, try Rtools 3.3.")
+            endif
+        endif
+    endif
+endfunction
+
 function SumatraInPath()
-    if g:rplugin_sumatra_in_path
+    if s:sumatra_in_path
         return 1
     endif
     if $PATH =~ "SumatraPDF"
-        let g:rplugin_sumatra_in_path = 1
+        let s:sumatra_in_path = 1
         return 1
     endif
 
     " $ProgramFiles has different values for win32 and win64
     if executable($ProgramFiles . "\\SumatraPDF\\SumatraPDF.exe")
         let $PATH = $ProgramFiles . "\\SumatraPDF;" . $PATH
-        let g:rplugin_sumatra_in_path = 1
+        let s:sumatra_in_path = 1
         return 1
     endif
     if executable($ProgramFiles . " (x86)\\SumatraPDF\\SumatraPDF.exe")
         let $PATH = $ProgramFiles . " (x86)\\SumatraPDF;" . $PATH
-        let g:rplugin_sumatra_in_path = 1
+        let s:sumatra_in_path = 1
         return 1
     endif
     return 0
@@ -91,8 +138,11 @@ endfunction
 
 function StartR_Windows()
     if string(g:SendCmdToR) != "function('SendCmdToR_fake')"
-        call RWarningMsg('R was already started.')
+        call JobStdin(g:rplugin_jobs["ClientServer"], "\x0bCheck if R is running\n")
+        return
     endif
+
+    let g:SendCmdToR = function('SendCmdToR_NotYet')
 
     call SetRHome()
     if has("nvim")
@@ -102,16 +152,12 @@ function StartR_Windows()
     endif
     call UnsetRHome()
 
-    let g:SendCmdToR = function('SendCmdToR_Windows')
-    if WaitNvimcomStart()
-        if g:R_arrange_windows && filereadable(g:rplugin_compldir . "/win_pos")
-            " ArrangeWindows
-            call JobStdin(g:rplugin_jobs["ClientServer"], "\005" . g:rplugin_compldir . "\n")
-        endif
-        if g:R_after_start != ''
-            call system(g:R_after_start)
-        endif
-    endif
+    call WaitNvimcomStart()
+endfunction
+
+function CleanNvimAndStartR()
+    call ClearRInfo()
+    call StartR_Windows()
 endfunction
 
 function SendCmdToR_Windows(...)

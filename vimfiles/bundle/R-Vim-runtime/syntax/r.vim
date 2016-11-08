@@ -5,7 +5,7 @@
 " 		      Tom Payne <tom@tompayne.org>
 " Contributor:        Johannes Ranke <jranke@uni-bremen.de>
 " Homepage:           https://github.com/jalvesaq/R-Vim-runtime
-" Last Change:	      Thu Mar 10, 2016  12:26PM
+" Last Change:	      Thu Aug 25, 2016  08:52PM
 " Filenames:	      *.R *.r *.Rhistory *.Rt
 "
 " NOTE: The highlighting of R functions is defined in
@@ -26,7 +26,11 @@ if exists("b:current_syntax")
   finish
 endif
 
-setlocal iskeyword=@,48-57,_,.
+if has("patch-7.4.1142")
+  syn iskeyword @,48-57,_,.
+else
+  setlocal iskeyword=@,48-57,_,.
+endif
 
 if exists("g:r_syntax_folding") && g:r_syntax_folding
   setlocal foldmethod=syntax
@@ -43,18 +47,19 @@ syn match rComment contains=@Spell,rCommentTodo,rOBlock "#.*"
 
 " Roxygen
 if g:r_hl_roxygen
-  syn region rOBlock start="^\s*\n#\{1,2}' " start="\%^#\{1,2}' " end="^\(#\{1,2}'\)\@!" contains=rOTitle,rOKeyword,rOExamples,@Spell keepend
-  syn region rOTitle start="^\s*\n#\{1,2}' " start="\%^#\{1,2}' " end="^\(#\{1,2}'\s*$\)\@=" contained contains=rOCommentKey
+  syn region rOBlock start="^\s*\n#\{1,2}' " start="\%^#\{1,2}' " end="^\(#\{1,2}'\)\@!" contains=rOTitle,rOTag,rOExamples,@Spell keepend fold
+  syn region rOTitle start="^\s*\n#\{1,2}' " start="\%^#\{1,2}' " end="^\(#\{1,2}'\s*$\)\@=" contained contains=rOCommentKey,rOTitleTag
   syn match rOCommentKey "#\{1,2}'" containedin=rOTitle contained
 
-  syn region rOExamples start="^#\{1,2}' @examples.*"rs=e+1,hs=e+1 end="^\(#\{1,2}' @.*\)\@=" end="^\(#\{1,2}'\)\@!" contained contains=rOKeyword
+  syn region rOExamples start="^#\{1,2}' @examples.*"rs=e+1,hs=e+1 end="^\(#\{1,2}' @.*\)\@=" end="^\(#\{1,2}'\)\@!" contained contains=rOTag fold
 
-  syn match rOKeyword contained "@\(param\|return\|name\|rdname\|examples\|example\|include\|docType\)"
-  syn match rOKeyword contained "@\(S3method\|TODO\|aliases\|alias\|assignee\|author\|callGraphDepth\|callGraph\)"
-  syn match rOKeyword contained "@\(callGraphPrimitives\|concept\|exportClass\|exportMethod\|exportPattern\|export\|formals\)"
-  syn match rOKeyword contained "@\(format\|importClassesFrom\|importFrom\|importMethodsFrom\|import\|keywords\|useDynLib\)"
-  syn match rOKeyword contained "@\(method\|noRd\|note\|references\|seealso\|setClass\|slot\|source\|title\|usage\)"
-  syn match rOKeyword contained "@\(family\|template\|templateVar\|description\|details\|inheritParams\|field\)"
+  syn match rOTitleTag contained "@title"
+  syn match rOTag contained "@\(param\|return\|name\|rdname\|examples\|example\|include\|docType\)"
+  syn match rOTag contained "@\(S3method\|TODO\|aliases\|alias\|assignee\|author\|callGraphDepth\|callGraph\)"
+  syn match rOTag contained "@\(callGraphPrimitives\|concept\|exportClass\|exportMethod\|exportPattern\|export\|formals\)"
+  syn match rOTag contained "@\(format\|importClassesFrom\|importFrom\|importMethodsFrom\|import\|keywords\|useDynLib\)"
+  syn match rOTag contained "@\(method\|noRd\|note\|references\|seealso\|setClass\|slot\|source\|title\|usage\)"
+  syn match rOTag contained "@\(family\|template\|templateVar\|description\|details\|inheritParams\|field\)"
 endif
 
 
@@ -174,8 +179,6 @@ endif
 if g:R_hi_fun
   " Nvim-R:
   runtime R/functions.vim
-  " Vim-R-plugin:
-  runtime r-plugin/functions.vim
 endif
 
 syn match rDollar display contained "\$"
@@ -246,7 +249,8 @@ hi def link rString      String
 hi def link rStrError    Error
 hi def link rType        Type
 if g:r_hl_roxygen
-  hi def link rOKeyword    Title
+  hi def link rOTitleTag   Operator
+  hi def link rOTag        Operator
   hi def link rOBlock      Comment
   hi def link rOTitle      Title
   hi def link rOCommentKey Comment

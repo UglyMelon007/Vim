@@ -15,64 +15,17 @@ packages to be loaded on R startup.
 If you use a plugin manager, such as [vim-plug], [Vundle] or [Pathogen],
 follow its instructions on how to install plugins from github.
 
-To install a stable version of the plugin, download the Vimball file
-`Nvim-R.vmb` from
-[Nvim-R/releases](https://github.com/jalvesaq/Nvim-R/releases),
-open it and do:</p>
+To install a stable version of the plugin, either download the Vim package from
+[Nvim-R/releases](https://github.com/jalvesaq/Nvim-R/releases)
+or the Vimball from
+[vim.org](http://www.vim.org/scripts/script.php?script_id=2628).
 
-```
-:so %
-```
-
-Then, press the space bar a few time to ensure the installation of all
-files.
-
-The Nvim-R source code includes the R package nvimcom, which has C code that
-needs compilation. Nvim-R will build and install nvimcom automatically, and it
-will also update it automatically whenever necessary. A C compiler (e.g. `gcc`
-or `clang`) is necessary. On Windows, you have to install
-[Rtools](https://cran.r-project.org/bin/windows/Rtools/).
+Please, read the section *Installation* from the
+[plugin's documentation](https://raw.githubusercontent.com/jalvesaq/Nvim-R/master/doc/Nvim-R.txt)
+for details.
 
 Please, read the plugin's documentation for instructions on usage.
 
-Below is a sample `init.vim`:
-
-```vim
-syntax on
-filetype plugin indent on
-
-"------------------------------------
-" Behavior
-"------------------------------------
-let maplocalleader = ","
-let mapleader = ";"
-
-"------------------------------------
-" Appearance
-"------------------------------------
-" www.vim.org/scripts/script.php?script_id=3292
-colorscheme southernlights
-
-"------------------------------------
-" Search
-"------------------------------------
-set infercase
-set hlsearch
-set incsearch
-
-"------------------------------------
-" Nvim-R
-"------------------------------------
-if has("gui_running")
-    inoremap <C-Space> <C-x><C-o>
-else
-    inoremap <Nul> <C-x><C-o>
-endif
-vmap <Space> <Plug>RDSendSelection
-nmap <Space> <Plug>RDSendLine
-```
-
-Please, read the file *doc/Nvim-R.txt* for usage details.
 
 ## Screenshots
 

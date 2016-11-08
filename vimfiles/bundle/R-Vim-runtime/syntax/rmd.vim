@@ -1,17 +1,26 @@
 " markdown Text with R statements
 " Language: markdown with R code chunks
 " Homepage: https://github.com/jalvesaq/R-Vim-runtime
-" Last Change: Sat Feb 06, 2016  06:45AM
+" Last Change: Mon Oct 24, 2016
 "
 " CONFIGURATION:
-"   To highlight chunk headers as R code, put in your vimrc:
+"   To highlight chunk headers as R code, put in your vimrc (e.g. .config/nvim/init.vim):
 "   let rmd_syn_hl_chunk = 1
+"
+"   For highlighting pandoc extensions to markdown like citations and TeX and
+"   many other advanced features like folding of markdown sections, it is
+"   recommended to install the vim-pandoc filetype plugin as well as the
+"   vim-pandoc-syntax filetype plugin from https://github.com/vim-pandoc.
+"
+" TODO:
+"   - Provide highlighting for rmarkdown parameters in yaml header
 
 if exists("b:current_syntax")
   finish
 endif
 
-" load all of pandoc info
+" load all of pandoc info, e.g. from
+" https://github.com/vim-pandoc/vim-pandoc-syntax
 runtime syntax/pandoc.vim
 if exists("b:current_syntax")
   let rmdIsPandoc = 1
@@ -22,6 +31,15 @@ else
   if exists("b:current_syntax")
     unlet b:current_syntax
   endif
+
+  " load all of the yaml syntax highlighting rules into @yaml
+  syntax include @yaml syntax/yaml.vim
+  if exists("b:current_syntax")
+    unlet b:current_syntax
+  endif
+
+  " highlight yaml block commonly used for front matter
+  syntax region rmdYamlBlock matchgroup=rmdYamlBlockDelim start="^---" matchgroup=rmdYamlBlockDelim end="^---" contains=@yaml keepend fold
 endif
 
 " load all of the r syntax highlighting rules into @R
@@ -41,9 +59,10 @@ syntax match rmdChunkDelim "^[ \t]*```$" contained
 syntax region rmdChunk start="^[ \t]*``` *{r.*}$" end="^[ \t]*```$" contains=@R,rmdChunkDelim keepend fold
 
 " also match and syntax highlight in-line R code
-syntax match rmdEndInline "`" contained
-syntax match rmdBeginInline "`r " contained
-syntax region rmdrInline start="`r "  end="`" contains=@R,rmdBeginInline,rmdEndInline keepend
+syntax region rmdrInline matchgroup=rmdInlineDelim start="`r "  end="`" contains=@R containedin=pandocLaTeXRegion,yamlFlowString keepend
+" I was not able to highlight rmdrInline inside a pandocLaTeXCommand, although
+" highlighting works within pandocLaTeXRegion and yamlFlowString. 
+syntax cluster texMathZoneGroup add=rmdrInline
 
 " match slidify special marker
 syntax match rmdSlidifySpecial "\*\*\*"
@@ -56,8 +75,6 @@ if rmdIsPandoc == 0
   if exists("b:current_syntax")
     unlet b:current_syntax
   endif
-  " Extend cluster
-  syn cluster texMathZoneGroup add=rmdrInline
   " Inline
   syntax match rmdLaTeXInlDelim "\$"
   syntax match rmdLaTeXInlDelim "\\\$"
@@ -72,13 +89,11 @@ if rmdIsPandoc == 0
   hi def link rmdLaTeXRegDelim Special
 endif
 
-setlocal iskeyword=@,48-57,_,.
-
 syn sync match rmdSyncChunk grouphere rmdChunk "^[ \t]*``` *{r"
 
+hi def link rmdYamlBlockDelim Delim
 hi def link rmdChunkDelim Special
-hi def link rmdBeginInline Special
-hi def link rmdEndInline Special
+hi def link rmdInlineDelim Special
 hi def link rmdBlockQuote Comment
 hi def link rmdSlidifySpecial Special
 
