@@ -104,8 +104,8 @@ nnoremap <Leader>n :lnext <CR>
 
 "ale(代码异步检测)
 "自定义跳转错误行快捷键：
-nmap <silent> <C-k> <Plug>
-nmap <silent> <C-j> <Plug>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 "Neocomplete
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
