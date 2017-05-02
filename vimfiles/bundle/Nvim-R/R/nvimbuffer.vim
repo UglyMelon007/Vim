@@ -10,13 +10,13 @@ endfunction
 
 function SendCmdToR_Neovim(...)
     if g:rplugin_jobs["R"]
-        if g:R_ca_ck
+        if g:R_clear_line
             let cmd = "\001" . "\013" . a:1
         else
             let cmd = a:1
         endif
 
-        if !exists("g:R_hl_term") || !exists("g:R_setwidth")
+        if !exists("g:R_hl_term")
             call SendToNvimcom("\x08" . $NVIMR_ID . 'paste(search(), collapse=" ")')
             let g:rplugin_lastev = ReadEvalReply()
             if !exists("g:R_hl_term")
@@ -24,13 +24,6 @@ function SendCmdToR_Neovim(...)
                     let g:R_hl_term = 0
                 else
                     let g:R_hl_term = 1
-                endif
-            endif
-            if !exists("g:R_setwidth")
-                if g:rplugin_lastev =~ "setwidth"
-                    let g:R_setwidth = 0
-                else
-                    let g:R_setwidth = 1
                 endif
             endif
         endif
@@ -92,7 +85,8 @@ function StartR_Neovim()
     let objbrttl = b:objbrtitle
     let curbufnm = bufname("%")
     set switchbuf=useopen
-    if g:R_vsplit
+
+    if g:R_rconsole_width > 0 && winwidth(0) > (g:R_rconsole_width + g:R_min_editor_width + 1 + (&number * &numberwidth))
         if g:R_rconsole_width > 16 && g:R_rconsole_width < (winwidth(0) - 17)
             silent exe "belowright " . g:R_rconsole_width . "vnew"
         else
@@ -105,6 +99,7 @@ function StartR_Neovim()
             silent belowright new
         endif
     endif
+
     if has("win32")
         call SetRHome()
     endif
@@ -131,16 +126,7 @@ function StartR_Neovim()
     call WaitNvimcomStart()
 endfunction
 
-" To be called by edit() in R running in Neovim buffer.
-function ShowRObject(fname)
-    let fcont = readfile(a:fname)
-    exe "tabnew " . substitute($NVIMR_TMPDIR . "/edit_" . $NVIMR_ID, ' ', '\\ ', 'g')
-    call setline(".", fcont)
-    set filetype=r
-    stopinsert
-    autocmd BufUnload <buffer> call delete($NVIMR_TMPDIR . "/edit_" . $NVIMR_ID . "_wait") | startinsert
-endfunction
-
+call RSetDefaultValue("g:R_setwidth", 1)
 if has("win32")
     " The R package colorout only works on Unix systems
     call RSetDefaultValue("g:R_hl_term", 1)

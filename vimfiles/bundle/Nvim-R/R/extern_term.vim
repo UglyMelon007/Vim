@@ -26,7 +26,14 @@ function StartR_ExternalTerm(rcmd)
                 \ ' NVIMR_COMPLDIR=' . substitute(g:rplugin_compldir, ' ', '\\ ', 'g') .
                 \ ' NVIMR_ID=' . $NVIMR_ID .
                 \ ' NVIMR_SECRET=' . $NVIMR_SECRET .
-                \ ' R_DEFAULT_PACKAGES=' . $R_DEFAULT_PACKAGES . ' ' . a:rcmd
+                \ ' R_DEFAULT_PACKAGES=' . $R_DEFAULT_PACKAGES
+
+    if $NVIM_IP_ADDRESS != ""
+        let rcmd .= ' NVIM_IP_ADDRESS='. $NVIM_IP_ADDRESS
+    endif
+
+    let rcmd .= ' ' . a:rcmd
+
 
     call system("tmux -L NvimR has-session -t " . g:rplugin_tmuxsname)
     if v:shell_error
@@ -37,6 +44,9 @@ function StartR_ExternalTerm(rcmd)
             call writefile(["#!/bin/sh", opencmd], $NVIMR_TMPDIR . "/openR")
             call system("chmod +x '" . $NVIMR_TMPDIR . "/openR'")
             let opencmd = "open '" . $NVIMR_TMPDIR . "/openR'"
+        elseif g:R_term == "konsole"
+            let opencmd = printf("%s 'tmux -L NvimR -2 %s new-session -s %s \"%s\"'",
+                        \ s:term_cmd, tmuxcnf, g:rplugin_tmuxsname, rcmd)
         else
             let opencmd = printf("%s tmux -L NvimR -2 %s new-session -s %s \"%s\"",
                         \ s:term_cmd, tmuxcnf, g:rplugin_tmuxsname, rcmd)
@@ -75,7 +85,7 @@ function StartR_ExternalTerm(rcmd)
 endfunction
 
 function SendCmdToR_Term(...)
-    if g:R_ca_ck
+    if g:R_clear_line
         let cmd = "\001" . "\013" . a:1
     else
         let cmd = a:1
