@@ -31,6 +31,7 @@ set relativenumber
 "不生成备份文件
 set noundofile
 set nobackup
+
 let g:syntastic_vim_checkers = ['vint']
 
 set selection=inclusive
@@ -60,7 +61,6 @@ language messages zh_CN.utf-8
 nnoremap <Leader>of :silent !explorer \%cd\% <CR>
 "在文件所在目录打开控制台
 nnoremap <Leader>oc :silent !start<CR>
-
 
 "如果打开R文件，则设置窗口大小及位置
 autocmd BufNewFile,BufRead *.r call SetWindowLocation()
@@ -160,9 +160,6 @@ autocmd FileType javascript,js setlocal omnifunc=nodejscomplete#CompleteJS
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-
-"vim-css-color
-let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 "vim-airline
 set laststatus=2
