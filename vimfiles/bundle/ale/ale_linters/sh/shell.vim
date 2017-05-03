@@ -1,17 +1,22 @@
 " Author: w0rp <devw0rp@gmail.com>
 " Description: Lints sh files using bash -n
 
+" Backwards compatibility
+if exists('g:ale_linters_sh_shell_default_shell')
+    let g:ale_sh_shell_default_shell = g:ale_linters_sh_shell_default_shell
+endif
+
 " This option can be changed to change the default shell when the shell
 " cannot be taken from the hashbang line.
-if !exists('g:ale_linters_sh_shell_default_shell')
-    let g:ale_linters_sh_shell_default_shell = fnamemodify($SHELL, ':t')
+if !exists('g:ale_sh_shell_default_shell')
+    let g:ale_sh_shell_default_shell = fnamemodify($SHELL, ':t')
 
-    if g:ale_linters_sh_shell_default_shell ==# ''
-        let g:ale_linters_sh_shell_default_shell = 'bash'
+    if g:ale_sh_shell_default_shell ==# '' || g:ale_sh_shell_default_shell ==# 'fish'
+        let g:ale_sh_shell_default_shell = 'bash'
     endif
 endif
 
-function! ale_linters#sh#shell#GetExecutable(buffer)
+function! ale_linters#sh#shell#GetExecutable(buffer) abort
     let l:banglines = getbufline(a:buffer, 1)
 
     " Take the shell executable from the hashbang, if we can.
@@ -26,42 +31,25 @@ function! ale_linters#sh#shell#GetExecutable(buffer)
         endfor
     endif
 
-    return g:ale_linters_sh_shell_default_shell
+    return ale#Var(a:buffer, 'sh_shell_default_shell')
 endfunction
 
-function! ale_linters#sh#shell#GetCommand(buffer)
-    return ale_linters#sh#shell#GetExecutable(a:buffer) . ' -n'
+function! ale_linters#sh#shell#GetCommand(buffer) abort
+    return ale_linters#sh#shell#GetExecutable(a:buffer) . ' -n %t'
 endfunction
 
-function! ale_linters#sh#shell#Handle(buffer, lines)
+function! ale_linters#sh#shell#Handle(buffer, lines) abort
     " Matches patterns line the following:
     "
     " bash: line 13: syntax error near unexpected token `d'
     " sh: 11: Syntax error: "(" unexpected
-    let l:pattern = '^[^:]\+: \%(\w\+ \|\)\(\d\+\): \(.\+\)'
+    let l:pattern = '\v(line |: ?)(\d+): (.+)$'
     let l:output = []
 
-    for l:line in a:lines
-        let l:match = matchlist(l:line, l:pattern)
-
-        if len(l:match) == 0
-            continue
-        endif
-
-        let l:line = l:match[1] + 0
-        let l:column = 1
-        let l:text = l:match[2]
-        let l:type = 'E'
-
-        " vcol is Needed to indicate that the column is a character.
+    for l:match in ale#util#GetMatches(a:lines, l:pattern)
         call add(l:output, {
-        \   'bufnr': a:buffer,
-        \   'lnum': l:line,
-        \   'vcol': 0,
-        \   'col': l:column,
-        \   'text': l:text,
-        \   'type': l:type,
-        \   'nr': -1,
+        \   'lnum': str2nr(l:match[2]),
+        \   'text': l:match[3],
         \})
     endfor
 

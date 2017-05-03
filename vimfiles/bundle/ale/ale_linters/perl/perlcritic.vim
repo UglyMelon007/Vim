@@ -1,31 +1,14 @@
 " Author: Vincent Lequertier <https://github.com/SkySymbol>
 " Description: This file adds support for checking perl with perl critic
 
-function! ale_linters#perl#perlcritic#Handle(buffer, lines)
+function! ale_linters#perl#perlcritic#Handle(buffer, lines) abort
     let l:pattern = '\(.\+\) at \(.\+\) line \(\d\+\)'
     let l:output = []
 
-    for l:line in a:lines
-        let l:match = matchlist(l:line, l:pattern)
-
-        if len(l:match) == 0
-            continue
-        endif
-
-        let l:line = l:match[3]
-        let l:column = 1
-        let l:text = l:match[1]
-        let l:type = 'E'
-
-        " vcol is Needed to indicate that the column is a character.
+    for l:match in ale#util#GetMatches(a:lines, l:pattern)
         call add(l:output, {
-        \   'bufnr': a:buffer,
-        \   'lnum': l:line,
-        \   'vcol': 0,
-        \   'col': l:column,
-        \   'text': l:text,
-        \   'type': l:type,
-        \   'nr': -1,
+        \   'text': l:match[1],
+        \   'lnum': l:match[3],
         \})
     endfor
 
@@ -35,7 +18,7 @@ endfunction
 call ale#linter#Define('perl', {
 \   'name': 'perlcritic',
 \   'executable': 'perlcritic',
-\   'output_stream': 'sdtout',
+\   'output_stream': 'stdout',
 \   'command': 'perlcritic --verbose 3 --nocolor',
 \   'callback': 'ale_linters#perl#perlcritic#Handle',
 \})

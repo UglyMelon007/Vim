@@ -4,7 +4,20 @@
 let g:ale_lua_luacheck_executable =
 \   get(g:, 'ale_lua_luacheck_executable', 'luacheck')
 
-function! ale_linters#lua#luacheck#Handle(buffer, lines)
+let g:ale_lua_luacheck_options =
+\   get(g:, 'ale_lua_luacheck_options', '')
+
+function! ale_linters#lua#luacheck#GetExecutable(buffer) abort
+    return ale#Var(a:buffer, 'lua_luacheck_executable')
+endfunction
+
+function! ale_linters#lua#luacheck#GetCommand(buffer) abort
+    return ale_linters#lua#luacheck#GetExecutable(a:buffer)
+    \   . ' ' . ale#Var(a:buffer, 'lua_luacheck_options')
+    \   . ' --formatter plain --codes --filename %s -'
+endfunction
+
+function! ale_linters#lua#luacheck#Handle(buffer, lines) abort
     " Matches patterns line the following:
     "
     " artal.lua:159:17: (W111) shadowing definition of loop variable 'i' on line 106
@@ -12,22 +25,12 @@ function! ale_linters#lua#luacheck#Handle(buffer, lines)
     let l:pattern = '^.*:\(\d\+\):\(\d\+\): (\([WE]\)\d\+) \(.\+\)$'
     let l:output = []
 
-    for l:line in a:lines
-        let l:match = matchlist(l:line, l:pattern)
-
-        if len(l:match) == 0
-            continue
-        endif
-
-        " vcol is Needed to indicate that the column is a character.
+    for l:match in ale#util#GetMatches(a:lines, l:pattern)
         call add(l:output, {
-        \   'bufnr': a:buffer,
         \   'lnum': l:match[1] + 0,
-        \   'vcol': 0,
         \   'col': l:match[2] + 0,
         \   'text': l:match[4],
         \   'type': l:match[3],
-        \   'nr': -1,
         \})
     endfor
 
@@ -36,7 +39,7 @@ endfunction
 
 call ale#linter#Define('lua', {
 \   'name': 'luacheck',
-\   'executable': g:ale_lua_luacheck_executable,
-\   'command': g:ale_lua_luacheck_executable . ' --formatter plain --codes --filename %s -',
+\   'executable_callback': 'ale_linters#lua#luacheck#GetExecutable',
+\   'command_callback': 'ale_linters#lua#luacheck#GetCommand',
 \   'callback': 'ale_linters#lua#luacheck#Handle',
 \})

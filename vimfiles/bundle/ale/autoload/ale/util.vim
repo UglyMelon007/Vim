@@ -1,23 +1,6 @@
 " Author: w0rp <devw0rp@gmail.com>
 " Description: Contains miscellaneous functions
 
-function! s:FindWrapperScript() abort
-    for l:parent in split(&runtimepath, ',')
-        " Expand the path to deal with ~ issues.
-        let l:path = expand(l:parent . '/' . 'stdin-wrapper')
-
-        if filereadable(l:path)
-            if has('win32')
-                return l:path . '.exe'
-            endif
-
-            return l:path
-        endif
-    endfor
-endfunction
-
-let g:ale#util#stdin_wrapper = s:FindWrapperScript()
-
 " A null file for sending output to nothing.
 let g:ale#util#nul_file = '/dev/null'
 
@@ -28,35 +11,6 @@ endif
 " Return the number of lines for a given buffer.
 function! ale#util#GetLineCount(buffer) abort
     return len(getbufline(a:buffer, 1, '$'))
-endfunction
-
-" Given a buffer and a filename, find the nearest file by searching upwards
-" through the paths relative to the given buffer.
-function! ale#util#FindNearestFile(buffer, filename) abort
-    let l:buffer_filename = fnamemodify(bufname(a:buffer), ':p')
-
-    let l:relative_path = findfile(a:filename, l:buffer_filename . ';')
-
-    if !empty(l:relative_path)
-        return fnamemodify(l:relative_path, ':p')
-    endif
-
-    return ''
-endfunction
-
-" Given a buffer, a string to search for, an a global fallback for when
-" the search fails, look for a file in parent paths, and if that fails,
-" use the global fallback path instead.
-function! ale#util#ResolveLocalPath(buffer, search_string, global_fallback) abort
-    " Search for a locally installed file first.
-    let l:path = ale#util#FindNearestFile(a:buffer, a:search_string)
-
-    " If the serach fails, try the global executable instead.
-    if empty(l:path)
-        let l:path = a:global_fallback
-    endif
-
-    return l:path
 endfunction
 
 function! ale#util#GetFunction(string_or_ref) abort
@@ -120,4 +74,54 @@ function! ale#util#BinarySearch(loclist, line, column) abort
             endif
         endif
     endwhile
+endfunction
+
+" A function for testing if a function is running inside a sandbox.
+" See :help sandbox
+function! ale#util#InSandbox() abort
+    try
+        call setbufvar('%', '', '')
+    catch /^Vim\%((\a\+)\)\=:E48/
+        " E48 is the sandbox error.
+        return 1
+    catch
+        " If we're not in a sandbox, we'll get another error about an
+        " invalid buffer variable name.
+    endtry
+
+    return 0
+endfunction
+
+" Get the number of milliseconds since some vague, but consistent, point in
+" the past.
+"
+" This function can be used for timing execution, etc.
+"
+" The time will be returned as a Number.
+function! ale#util#ClockMilliseconds() abort
+    return float2nr(reltimefloat(reltime()) * 1000)
+endfunction
+
+" Given a single line, or a List of lines, and a single pattern, or a List
+" of patterns, return all of the matches for the lines(s) from the given
+" patterns, using matchlist().
+"
+" Only the first pattern which matches a line will be returned.
+function! ale#util#GetMatches(lines, patterns) abort
+    let l:matches = []
+    let l:lines = type(a:lines) == type([]) ? a:lines : [a:lines]
+    let l:patterns = type(a:patterns) == type([]) ? a:patterns : [a:patterns]
+
+    for l:line in l:lines
+        for l:pattern in l:patterns
+            let l:match = matchlist(l:line, l:pattern)
+
+            if !empty(l:match)
+                call add(l:matches, l:match)
+                break
+            endif
+        endfor
+    endfor
+
+    return l:matches
 endfunction

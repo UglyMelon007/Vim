@@ -4,6 +4,6 @@
 call ale#linter#Define('ansible', {
 \   'name': 'ansible',
 \   'executable': 'ansible',
-\   'command': g:ale#util#stdin_wrapper . ' .yml ansible-lint -p',
-\   'callback': 'ale#handlers#HandlePEP8Format',
+\   'command': 'ansible-lint -p %t',
+\   'callback': 'ale#handlers#python#HandlePEP8Format',
 \})
