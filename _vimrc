@@ -3,13 +3,6 @@ filetype plugin on
 filetype on
 syntax on
 
-"文件打开跳转上次编辑位置
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-"自动进入文件所在目录
-set autochdir
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
@@ -33,6 +26,20 @@ set noundofile
 set nobackup
 
 let g:syntastic_vim_checkers = ['vint']
+
+"文件打开跳转上次编辑位置
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+"自动进入文件所在目录
+set autochdir
+
+"窗口大小改变
+nmap w= :resize +3<CR>
+nmap w- :resize -3<CR>
+nmap w, :vertical resize -3<CR>
+nmap w. :vertical resize +3<CR>
 
 set selection=inclusive
 "为gvim与vim设置不同的配色方案
@@ -68,6 +75,9 @@ function! SetWindowLocation()
 	winpos 0 0
 	set lines=17 columns=156
 endfunction
+
+"复制文件路径
+nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
 "vim-grepper
 nnoremap <Leader>ft :Grepper<Cr>
@@ -249,13 +259,15 @@ let g:vimwiki_hl_cb_checked = 1
 " 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
 let g:vimwiki_menu = ''
 
+nmap <F4>ie :call ViewInBrowser("ie")<cr>
+nmap <F4>cr :call ViewInBrowser("cr")<cr>
 " 在浏览器预览 for win32
 function! ViewInBrowser(name)
     let file = expand("%:p")
     exec ":update " . file
     let l:browsers = {
-        \"cr":"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
-        \"ie":"C:/progra~1/intern~1/iexplore.exe"
+        \"cr":'C:\\Users\\lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
+        \"ie":'C://Program Files//Internet Explorer//iexplore.exe'
     \}
     let htdocs='E:\\apmxe\\htdocs\\'
     let strpos = stridx(file, substitute(htdocs, '\\\\', '\', "g"))
@@ -267,8 +279,6 @@ function! ViewInBrowser(name)
         exec ":silent !start ". l:browsers[a:name] file
     endif
 endfunction
-nmap <f4>ie :call ViewInBrowser("ie")<cr>
-nmap <f4>cr :call ViewInBrowser("cr")<cr>
 
 "美化各类文档（利用js-beautify)
 nmap <leader>ff :call RefreshCode()<cr>
