@@ -11,6 +11,7 @@ set diffexpr=MyDiff()
 set autoindent
 "set guifont=Monaco:h10
 set guifont=Consolas_for_Powerline_FixedD:h12:cANSI:qDRAFT
+"高亮当前行
 set cursorline
 set guioptions-=T 
 set guioptions-=m
@@ -45,6 +46,8 @@ set selection=inclusive
 "为gvim与vim设置不同的配色方案
 if has('gui_running')
 	colorscheme lucius
+else 
+	colorscheme jellybeans
 endif
 "设置缩进方式
 set fdm=indent
@@ -266,7 +269,7 @@ function! ViewInBrowser(name)
     let file = expand("%:p")
     exec ":update " . file
     let l:browsers = {
-        \"cr":'C:\\Users\\lenovo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe',
+        \"cr":'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
         \"ie":'C://Program Files//Internet Explorer//iexplore.exe'
     \}
     let htdocs='E:\\apmxe\\htdocs\\'
